@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { SyncOutlined } from "@ant-design/icons";
 import Link from "next/link";
 
-const Register = () => {
+const Login = () => {
   const [email, setEmail] = useState("ibrahim@gmail.com");
   const [password, setPassword] = useState("111111");
   const [loading, setLoading] = useState(false);
@@ -15,13 +15,12 @@ const Register = () => {
     try {
       setLoading(true);
 
-      const { data } = await axios.post(`/api/register`, {
+      const { data } = await axios.post(`/api/login`, {
         email,
         password,
       });
-      console.log("RESPONSE RECIEVED", data);
+      console.log("LOGIN RESPONSE", data);
 
-      setLoading(false);
     } catch (err) {
       toast.error(err.response.data);
       setLoading(false);
@@ -34,6 +33,7 @@ const Register = () => {
 
       <div className="container col-md-4 offset-md-4 pb-5 ">
         <form onSubmit={handleSubmit}>
+
           <input
             type="email"
             className="form-control mb-4 p-4"
@@ -72,4 +72,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
