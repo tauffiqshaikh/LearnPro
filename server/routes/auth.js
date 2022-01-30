@@ -1,12 +1,16 @@
 import express from "express";
 
-const route = express.Router();
+const router = express.Router();
 
-//controllers
-import {register,login,logout} from '../controllers/auth' 
+// middleware
+import { requireSignin } from "../middlewares";
 
-route.post('/register', register );
-route.post('/login', login );
-route.get('/logout', logout );
+// controllers
+import { register, login, logout, currentUser } from "../controllers/auth";
 
-module.exports = route;
+router.post("/register", register);
+router.post("/login", login);
+router.get("/logout", logout);
+router.get("/current-user", requireSignin, currentUser);
+
+module.exports = router;

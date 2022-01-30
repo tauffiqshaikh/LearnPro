@@ -37,7 +37,7 @@ const TopNav = () => {
   };
 
   return (
-    <Menu mode="horizontal" selectedKeys={[currentPage]}>
+    <Menu mode="horizontal" selectedKeys={[currentPage]} key='removeCurrent' >
       <Item
         key="/"
         onClick={(e) => setCurrentPage(e.key)}
@@ -72,8 +72,9 @@ const TopNav = () => {
       )}
 
       {user !== null && (
-      <SubMenu icon={<CoffeeOutlined/>} title={user && user.name} className="float-right" >
+      <SubMenu icon={<CoffeeOutlined/>} title={user && user.name} className="float-right" key='removeCurrent' >
       <Item
+      key='removeCurrent1'
       onClick={logout}
       icon={<LogoutOutlined />}
       className="float-right"
