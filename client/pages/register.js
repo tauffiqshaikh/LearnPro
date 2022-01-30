@@ -5,9 +5,9 @@ import { SyncOutlined } from "@ant-design/icons";
 import Link from "next/link";
 
 const Register = () => {
-  const [name, setName] = useState("ibrahim");
-  const [email, setEmail] = useState("ibrahim@gmail.com");
-  const [password, setPassword] = useState("111111");
+  const [name, setName] = useState("tauffiq");
+  const [email, setEmail] = useState("tfq1234@gmail.com");
+  const [password, setPassword] = useState("12345678");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {

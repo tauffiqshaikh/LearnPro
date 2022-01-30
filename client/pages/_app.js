@@ -4,14 +4,15 @@ import '../public/css/styles.css'
 import TopNav from '../components/TopNav';
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import {Provider} from '../context'
 
 
 const MyApp = ({Component, pageProps}) => {
-    return <div>
+    return <Provider>
         <ToastContainer position='top-center'/>
         <TopNav/>
         <Component {...pageProps} />
-    </div>
+    </Provider>
 }
 
 export default MyApp;
