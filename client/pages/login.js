@@ -1,27 +1,51 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { SyncOutlined } from "@ant-design/icons";
 import Link from "next/link";
+import { Context } from "../context";
+import {useRouter} from 'next/router'
 
-const Register = () => {
-  const [email, setEmail] = useState("ibrahim@gmail.com");
-  const [password, setPassword] = useState("111111");
+const Login = () => {
+  const [email, setEmail] = useState("tfq1234@gmail.com");
+  const [password, setPassword] = useState("12345678");
   const [loading, setLoading] = useState(false);
+
+//state
+const {
+    state:{user},
+    dispatch
+    } = useContext(Context)
+
+//router
+  const router = useRouter();
+
+  useEffect(()=>{
+    if(user!==null) router.push('/')
+  },[user]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      setLoading(true);
+      setLoading(true)
 
-      const { data } = await axios.post(`/api/register`, {
+      const { data } = await axios.post(`/api/login`, {
         email,
         password,
       });
-      console.log("RESPONSE RECIEVED", data);
+      // console.log("LOGIN RESPONSE", data);
+      dispatch({
+        type:"LOGIN",
+        payload : data
+      });
 
-      setLoading(false);
+      //save to local storage
+      window.localStorage.setItem('user', JSON.stringify(data))
+
+      //redirect
+      router.push('/')
+
     } catch (err) {
       toast.error(err.response.data);
       setLoading(false);
@@ -34,6 +58,7 @@ const Register = () => {
 
       <div className="container col-md-4 offset-md-4 pb-5 ">
         <form onSubmit={handleSubmit}>
+
           <input
             type="email"
             className="form-control mb-4 p-4"
@@ -72,4 +97,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

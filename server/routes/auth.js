@@ -1,8 +1,16 @@
 import express from "express";
-import {register} from '../controllers/auth.js';
 
-const route = express.Router();
+const router = express.Router();
 
-route.post('/register', register );
+// middleware
+import { requireSignin } from "../middlewares";
 
-module.exports = route;
+// controllers
+import { register, login, logout, currentUser } from "../controllers/auth";
+
+router.post("/register", register);
+router.post("/login", login);
+router.get("/logout", logout);
+router.get("/current-user", requireSignin, currentUser);
+
+module.exports = router;
