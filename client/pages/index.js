@@ -1,12 +1,12 @@
 const Index = () => {
-    return (
-        <>
-            <h1 className="  text-center  jumbotron square">
-               Online Learning Platform
-            </h1>
-            <p>From NextJS</p>
-        </>
-    )
-}
+  return (
+    <>
+      <h1 className="jumbotron text-center bg-primary square">
+        Online Education Marketplace
+      </h1>
+      <p>from next js...</p>
+    </>
+  );
+};
 
 export default Index;

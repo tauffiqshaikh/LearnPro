@@ -1,52 +1,55 @@
-import { useContext, useEffect, useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { SyncOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { Context } from "../context";
 import { useRouter } from "next/router";
+import user from "../../server/models/user";
 
 const Register = () => {
-  const [name, setName] = useState("tauffiq");
-  const [email, setEmail] = useState("tfq1234@gmail.com");
-  const [password, setPassword] = useState("12345678");
+  const [name, setName] = useState("Tauffiq");
+  const [email, setEmail] = useState("tauffiq@gmail.com");
+  const [password, setPassword] = useState("tttttt");
   const [loading, setLoading] = useState(false);
 
   const {
-    state:{user},
+    state: { user },
   } = useContext(Context);
 
   const router = useRouter();
 
-  useEffect(()=>{
-    if (user !== null) router.push('/')
-  },[user]);
+  useEffect(() => {
+    if (user !== null) router.push("/");
+  }, [user]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // console.table({ name, email, password });
     try {
       setLoading(true);
-
       const { data } = await axios.post(`/api/register`, {
         name,
         email,
         password,
       });
-      console.log("RESPONSE RECIEVED", data);
-      toast("Registered Successfully! Please login");
+      // console.log("REGISTER RESPONSE", data);
+      toast("Registration successful. Please login.");
+      setName("");
+      setEmail("");
+      setPassword("");
       setLoading(false);
     } catch (err) {
-      toast.error(err.response.data);
+      toast(err.response.data);
       setLoading(false);
     }
   };
 
   return (
     <>
-      <h1 className="jumbotron text-center bg-primary">Register</h1>
+      <h1 className="jumbotron text-center bg-primary square">Register</h1>
 
-      <div className="container col-md-4 offset-md-4 pb-5 ">
+      <div className="container col-md-4 offset-md-4 pb-5">
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -77,8 +80,8 @@ const Register = () => {
 
           <button
             type="submit"
-            className="btn btn-primary col-12 p-2 "
-            disabled={!name || !password || !email || loading}
+            className="btn btn-block btn-primary"
+            disabled={!name || !email || !password || loading}
           >
             {loading ? <SyncOutlined spin /> : "Submit"}
           </button>
@@ -88,7 +91,7 @@ const Register = () => {
           Already registered?{" "}
           <Link href="/login">
             <a>Login</a>
-          </Link>{" "}
+          </Link>
         </p>
       </div>
     </>
