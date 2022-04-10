@@ -1,13 +1,8 @@
- .square {
-     border-radius: 0px;
- }
- 
- .jumbotron {
-    background: -webkit-linear-gradient(to right, #007bff, #000 );
-    background: linear-gradient(to right, #1bf7ff, rgb(132, 0, 255) );
+.square {
+  border-radius: 0px;
+}
 
-     color: #fff;
-     padding: 2rem 1rem;
-     margin-bottom: 2rem;
-    
- }
+.jumbotron {
+  background-image: linear-gradient(to right, #007bff, #000);
+  color: #fff;
+}

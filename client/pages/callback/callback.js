@@ -12,7 +12,6 @@ const StripeCallback = () => {
   useEffect(() => {
     if (user) {
       axios.post("/api/get-account-status").then((res) => {
-        // console.log(res);
         dispatch({
           type: "LOGIN",
           payload: res.data,
