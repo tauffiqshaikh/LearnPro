@@ -18,7 +18,6 @@ const BecomeInstructor = () => {
   } = useContext(Context);
 
   const becomeInstructor = () => {
-    // console.log("become instructor");
     setLoading(true);
     axios
       .post("/api/make-instructor")
@@ -28,7 +27,7 @@ const BecomeInstructor = () => {
       })
       .catch((err) => {
         console.log(err.response.status);
-        toast("Stripe onboarding failed. Try again.");
+        toast("Process failed. Try again.");
         setLoading(false);
       });
   };
@@ -43,11 +42,8 @@ const BecomeInstructor = () => {
             <div className="pt-4">
               <UserSwitchOutlined className="display-1 pb-3" />
               <br />
-              <h2>Setup payout to publish courses on Edemy</h2>
-              <p className="lead text-warning">
-                Edemy partners with stripe to transfer earnings to your bank
-                account
-              </p>
+              <h2>Proceed to become an instructor</h2>
+              
 
               <Button
                 className="mb-3"
@@ -62,12 +58,9 @@ const BecomeInstructor = () => {
                   loading
                 }
               >
-                {loading ? "Processing..." : "Payout Setup"}
+                {loading ? "Processing..." : "Become Instructor"}
               </Button>
 
-              <p className="lead">
-                You will be redirected to stripe to complete onboarding process.
-              </p>
             </div>
           </div>
         </div>

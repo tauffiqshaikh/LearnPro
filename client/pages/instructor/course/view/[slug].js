@@ -3,12 +3,13 @@ import { useRouter } from "next/router";
 import InstructorRoute from "../../../../components/routes/InstructorRoute";
 import axios from "axios";
 import { Avatar, Tooltip, Button, Modal, List } from "antd";
-import { 
-  EditOutlined, 
-  CheckOutlined, 
-  UploadOutlined, 
+import {
+  EditOutlined,
+  CheckOutlined,
+  UploadOutlined,
   QuestionOutlined,
-  CloseOutlined 
+  CloseOutlined,
+  UserSwitchOutlined,
 } from "@ant-design/icons";
 import ReactMarkdown from "react-markdown";
 import AddLessonForm from "../../../../components/forms/AddLessonForm";
@@ -27,6 +28,8 @@ const CourseView = () => {
   const [uploading, setUploading] = useState(false);
   const [uploadButtonText, setUploadButtonText] = useState("Upload Video");
   const [progress, setProgress] = useState(0);
+  // student count
+  const [students, setStudents] = useState(0);
 
   const router = useRouter();
   const { slug } = router.query;
@@ -35,9 +38,21 @@ const CourseView = () => {
     loadCourse();
   }, [slug]);
 
+  useEffect(() => {
+    course && studentCount();
+  }, [course]);
+
   const loadCourse = async () => {
     const { data } = await axios.get(`/api/course/${slug}`);
     setCourse(data);
+  };
+
+  const studentCount = async () => {
+    const { data } = await axios.post(`/api/instructor/student-count`, {
+      courseId: course._id,
+    });
+    console.log("STUDENT COUNT => ", data);
+    setStudents(data.length);
   };
 
   // FUNCTIONS FOR ADD LESSON
@@ -52,8 +67,8 @@ const CourseView = () => {
       // console.log(data)
       setValues({ ...values, title: "", content: "", video: {} });
       setProgress(0);
-      setVisible(false);
       setUploadButtonText("Upload video");
+      setVisible(false);
       setCourse(data);
       toast("Lesson added");
     } catch (err) {
@@ -162,6 +177,10 @@ const CourseView = () => {
                   </div>
 
                   <div className="d-flex pt-4">
+                    <Tooltip title={`${students} Enrolled`}>
+                      <UserSwitchOutlined className="h5 pointer text-info mr-4" />
+                    </Tooltip>
+
                     <Tooltip title="Edit">
                       <EditOutlined
                         onClick={() =>
@@ -170,6 +189,7 @@ const CourseView = () => {
                         className="h5 pointer text-warning mr-4"
                       />
                     </Tooltip>
+
                     {course.lessons && course.lessons.length < 5 ? (
                       <Tooltip title="Min 5 lessons required to publish">
                         <QuestionOutlined className="h5 pointer text-danger" />
